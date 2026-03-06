@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBRE 战略历程与收并购深度解析 (1990-2026)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+body { 
+    font-family: 'Noto Sans SC', sans-serif; 
+    background-color: #f1f5f9; /* Soft slate background */
+    color: #0f172a; 
+    overflow: hidden; /* Prevent body scroll for true PPT feel */
+}
+
+/* Slide Container Logic */
+.slide { 
+    position: absolute; 
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0; 
+    pointer-events: none; 
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+    transform: translateY(30px) scale(0.97);
+    overflow-y: auto; 
+    display: flex;
+    flex-direction: column;
+}
+.slide.active { 
+    opacity: 1; 
+    pointer-events: auto; 
+    z-index: 10; 
+    transform: translateY(0) scale(1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+.chart-container { position: relative; width: 100%; height: 100%; min-height: 250px; }
+.chart-container-sm { position: relative; width: 100%; height: 100%; min-height: 200px; }
+
+/* Enhanced Table Styling to Fill Space */
+table { border-collapse: separate; border-spacing: 0; width: 100%; height: 100%; }
+th { 
+    background-color: #f8fafc; 
+    color: #1e293b; 
+    font-weight: 700; 
+    text-align: left; 
+    padding: 16px 20px; 
+    border-bottom: 2px solid #cbd5e1; 
+    white-space: nowrap; 
+    font-size: 1rem; 
+}
+td { 
+    padding: 20px 20px; /* Generous padding to expand row height */
+    border-bottom: 1px solid #e2e8f0; 
+    vertical-align: middle; 
+    line-height: 1.6; 
+    font-size: 0.95rem; 
+}
+tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background-color: #f1f5f9; transition: background-color 0.2s; }
+
+/* Left Navigation/Stages Cards */
+.stage-card { 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    height: 100%;
+}
+.stage-card:hover { 
+    transform: translateX(4px); 
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08); 
+}
+
+.nav-link.active { color: #22d3ee; font-weight: 700; border-bottom: 3px solid #22d3ee; }
+
+/* Subtle animated background */
+.bg-grid-pattern {
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+</style>
+</head>
+<body class="antialiased h-screen w-screen flex flex-col">
+
+<!-- Application Structure Plan: Upgraded PPT-style SPA. Addressed feedback by significantly increasing font sizes across all elements (headers, body text, tables, tooltips). Re-engineered the grid layouts so that tables organically stretch to fill the vertical space (`h-full` on flex-1 wrappers and padded table cells). Deepened the color contrast for better presentation visibility. Navigation remains fixed. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<!-- Top Navigation -->
+<nav class="shrink-0 z-50 bg-[#0f172a] text-white shadow-lg h-16 flex items-center relative">
+    <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-900 via-cyan-500 to-blue-900"></div>
+    <div class="w-full px-6 lg:px-12 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+            <span class="text-2xl text-cyan-400 font-black tracking-tighter">&#9635; CBRE</span>
+            <span class="font-medium text-sm text-blue-200 hidden sm:block border-l border-blue-700 pl-4 tracking-wide">战略并购白皮书</span>
+        </div>
+        <div class="hidden lg:flex space-x-8 text-base font-medium">
+            <button onclick="goToSlide(0)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">封面</button>
+            <button onclick="goToSlide(1)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">全局纵览</button>
+            <button onclick="goToSlide(2)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">阶段一 (90-97)</button>
+            <button onclick="goToSlide(3)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">阶段二 (98-10)</button>
+            <button onclick="goToSlide(4)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">阶段三 (11-18)</button>
+            <button onclick="goToSlide(5)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">阶段四 (19-24)</button>
+            <button onclick="goToSlide(6)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">阶段五 (25-26)</button>
+            <button onclick="goToSlide(7)" class="nav-link text-gray-400 hover:text-white transition-colors h-16 flex items-center">总结借鉴</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Slide Area (16:9 constrained) -->
+<main class="flex-1 relative w-full max-w-[1800px] mx-auto overflow-hidden bg-slate-50">
+    
+    <!-- Slide 0: Cover -->
+    <div class="slide active bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#2563eb] flex flex-col items-center justify-center p-12">
+        <div class="absolute inset-0 opacity-10 bg-grid-pattern"></div>
+        <div class="relative z-10 text-center max-w-5xl">
+            <span class="inline-block py-2 px-6 rounded-full bg-cyan-900/40 text-cyan-300 text-base font-bold tracking-widest mb-8 border border-cyan-400/30 uppercase backdrop-blur-sm">&#9733; 战略咨询顾问深度解析报告</span>
+            <h1 class="text-5xl md:text-6xl lg:text-8xl font-black text-white mb-8 leading-tight tracking-tight drop-shadow-xl">世邦魏理仕 (CBRE) <br/><span class="text-cyan-400">战略演进与收并购逻辑</span></h1>
+            <p class="text-xl md:text-2xl text-blue-100 font-light leading-relaxed max-w-4xl mx-auto drop-shadow-md">
+                系统性复盘1990-2026年间，CBRE如何通过能力补全、全球扩张、轻资产转型及前沿科技布局，实现营收跨越式增长，揭示其成为全球最大商业空间管理巨头的战略密码。
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 1: Overview -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 text-center shrink-0">
+            <h2 class="text-4xl font-black text-[#0f172a] mb-3 tracking-tight">历年营收、年末市值与关键并购纵览</h2>
+            <p class="text-gray-600 text-base max-w-5xl mx-auto">如下全景展示了1990至2026年间CBRE的营业收入与年末总市值估算。每一次市值的跨越式增长，均紧密咬合着其核心的战略转型与巨型并购事件。（悬停数据点可查看详情）</p>
+        </div>
+        
+        <div class="grid grid-cols-5 gap-4 mb-6 shrink-0">
+            <!-- Stage Buttons for Dashboard navigation -->
+            <button onclick="goToSlide(2)" class="bg-[#1e3a8a] text-white border border-blue-800 p-4 rounded-xl text-left transition-all shadow-lg hover:bg-blue-900 transform hover:-translate-y-1">
+                <div class="text-xs font-bold text-cyan-300 mb-1 tracking-wider">第一阶段 (90-97)</div>
+                <div class="text-lg font-bold">能力补全</div>
+            </button>
+            <button onclick="goToSlide(3)" class="bg-white hover:bg-blue-50 border border-gray-200 p-4 rounded-xl text-left transition-all shadow hover:shadow-md transform hover:-translate-y-1">
+                <div class="text-xs font-bold text-blue-800 mb-1 tracking-wider">第二阶段 (98-10)</div>
+                <div class="text-lg font-bold text-gray-800">全球化扩张</div>
+            </button>
+            <button onclick="goToSlide(4)" class="bg-white hover:bg-blue-50 border border-gray-200 p-4 rounded-xl text-left transition-all shadow hover:shadow-md transform hover:-translate-y-1">
+                <div class="text-xs font-bold text-blue-800 mb-1 tracking-wider">第三阶段 (11-18)</div>
+                <div class="text-lg font-bold text-gray-800">行业地位巩固</div>
+            </button>
+            <button onclick="goToSlide(5)" class="bg-white hover:bg-blue-50 border border-gray-200 p-4 rounded-xl text-left transition-all shadow hover:shadow-md transform hover:-translate-y-1">
+                <div class="text-xs font-bold text-blue-800 mb-1 tracking-wider">第四阶段 (19-24)</div>
+                <div class="text-lg font-bold text-gray-800">业务功能充足</div>
+            </button>
+            <button onclick="goToSlide(6)" class="bg-white hover:bg-blue-50 border border-gray-200 p-4 rounded-xl text-left transition-all shadow hover:shadow-md transform hover:-translate-y-1">
+                <div class="text-xs font-bold text-blue-800 mb-1 tracking-wider">第五阶段 (25-26)</div>
+                <div class="text-lg font-bold text-gray-800">新兴领域布局</div>
+            </button>
+        </div>
+
+        <div class="flex-1 min-h-0 bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col">
+            <div class="chart-container flex-1">
+                <canvas id="macroChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Stage 1 -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 shrink-0 flex items-center justify-between">
+            <div>
+                <span class="bg-blue-100 text-[#1e3a8a] px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase">&#9632; 1990 - 1997</span>
+                <h2 class="text-4xl font-black text-[#0f172a] mt-3">阶段一：能力补全</h2>
+            </div>
+            <div class="text-right max-w-lg">
+                <p class="text-base text-gray-600 font-medium">通过高频小型区域并购，迅速填补地域空白与基础物业管理短板，夯实独立发展的北美底座。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+            <!-- Left Panel: Narrative -->
+            <div class="col-span-4 flex flex-col gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#1d4ed8]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 时代背景</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">美国商业地产崩盘后复苏，本土市场高度碎片化。大型企业客户寻求跨州界的统一服务标准，单一城市经纪公司难以满足。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#1d4ed8]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 公司战略</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">立足北美，从单一地点经纪业务向全国性综合服务网络拓展，重点补齐<strong class="text-[#0f172a]">商业租赁</strong>与<strong class="text-[#0f172a]">基础物业管理</strong>这两大核心能力。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#1d4ed8]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 收并购行为</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">实施同业横向并购。大举收购各州及市级领先的中小型经纪团队，以及地方性物业管理公司（如Westmac, Koll）。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#1d4ed8]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 并购后整合</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">品牌统一化与系统集中化。高度保留收购团队核心合伙人，嫁接总部全美客户资源网络反哺前线，实现市占率跃升。</p>
+                </div>
+            </div>
+
+            <!-- Right Panel: Data Table -->
+            <div class="col-span-8 flex flex-col h-full">
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden flex-1 flex flex-col">
+                    <div class="bg-[#1e3a8a] px-6 py-4 shrink-0">
+                        <h4 class="font-bold text-lg text-white tracking-wide">财务表现、业务架构与收并购行为矩阵</h4>
+                    </div>
+                    <!-- Table container set to flex-1 to occupy remaining height -->
+                    <div class="flex-1 w-full p-2">
+                        <table class="w-full h-full text-base">
+                            <thead>
+                                <tr>
+                                    <th class="w-[10%]">年份</th>
+                                    <th class="w-[15%]">营收<br/><span class="text-xs font-normal">(亿美元)</span></th>
+                                    <th class="w-[30%]">核心业务架构与分部</th>
+                                    <th class="w-[45%]">关键收并购和退出行为及其战略意义</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800">
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">1990</td>
+                                    <td class="font-bold text-lg text-gray-700">4.0</td>
+                                    <td rowspan="4" class="bg-slate-50 border-r border-gray-200">
+                                        <ul class="list-disc pl-6 space-y-3 font-medium">
+                                            <li class="font-bold text-[#0f172a] text-lg">商业租赁 (核心)</li>
+                                            <li>投资销售经纪</li>
+                                            <li>基础物业管理</li>
+                                        </ul>
+                                    </td>
+                                    <td>完成管理层收购 (MBO)，脱离Sears Roebuck体系，<strong class="text-[#0f172a]">确立独立发展的战略起点</strong>。</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">1993</td>
+                                    <td class="font-bold text-lg text-gray-700">5.5</td>
+                                    <td>收购 Westmac 等区域性精品公司。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：填补西海岸及中西部服务盲区。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">1995</td>
+                                    <td class="font-bold text-lg text-gray-700">6.8</td>
+                                    <td>设立 L.J. Melody & Co。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：形成房地产投资银行业务雏形。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">1997</td>
+                                    <td class="font-bold text-lg text-gray-700">8.0</td>
+                                    <td>收购 Koll Real Estate Services。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：极大扩充物业管理组合，建立经常性收入地基。</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Stage 2 -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 shrink-0 flex items-center justify-between">
+            <div>
+                <span class="bg-blue-100 text-[#1e3a8a] px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase">&#9632; 1998 - 2010</span>
+                <h2 class="text-4xl font-black text-[#0f172a] mt-3">阶段二：全球化扩张</h2>
+            </div>
+            <div class="text-right max-w-lg">
+                <p class="text-base text-gray-600 font-medium">实施“蛇吞象”跨大洲巨型并购，构建横跨欧亚非的全球网络，并确立企业外包服务新模式。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+            <div class="col-span-4 flex flex-col gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#3b82f6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 时代背景</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">跨国企业加速全球化，催生全球资产统一管理需求。08年次贷危机带来行业剧烈洗牌，考验跨国企业韧性。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#3b82f6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 公司战略</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">“走出去”与“全案化”。建立横跨三大洲的全球版图；引入并重点发展“<strong class="text-[#0f172a]">企业外包服务</strong>”，提供综合管理方案。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#3b82f6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 收并购行为</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">合并国际根基深厚的 Richard Ellis (实现欧洲落地)，斥资22亿美元收购同行巨头 Trammell Crow Company (TCC)。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#3b82f6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#3b82f6] text-xl">&#10061;</span> 并购后整合</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">建立矩阵式管理（区域+业务交叉）。借TCC并入，重构客户分类，独立外包服务，实现从<strong class="text-[#0f172a]">“做单子”向“管客户”</strong>跨越。</p>
+                </div>
+            </div>
+
+            <div class="col-span-8 flex flex-col h-full">
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden flex-1 flex flex-col">
+                    <div class="bg-[#1e3a8a] px-6 py-4 shrink-0">
+                        <h4 class="font-bold text-lg text-white tracking-wide">财务表现、业务架构与收并购行为矩阵</h4>
+                    </div>
+                    <div class="flex-1 w-full p-2">
+                        <table class="w-full h-full text-base">
+                            <thead>
+                                <tr>
+                                    <th class="w-[10%]">年份</th>
+                                    <th class="w-[15%]">营收<br/><span class="text-xs font-normal">(亿美元)</span></th>
+                                    <th class="w-[25%]">核心业务架构</th>
+                                    <th class="w-[50%]">关键收并购和退出行为及其战略意义</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800">
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">1998</td>
+                                    <td class="font-bold text-lg text-gray-700">12.0</td>
+                                    <td rowspan="5" class="bg-slate-50 border-r border-gray-200">
+                                        <ul class="list-disc pl-6 space-y-3 font-medium">
+                                            <li>全球经纪与咨询</li>
+                                            <li>全球投资管理</li>
+                                            <li class="text-[#06b6d4] font-bold text-lg border-b-2 border-cyan-100 inline-block">企业外包服务 (新兴)</li>
+                                        </ul>
+                                    </td>
+                                    <td>合并 Richard Ellis International (REI)。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：更名CBRE，正式获得覆盖欧洲和亚洲的运营网络。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2003</td>
+                                    <td class="font-bold text-lg text-gray-700">16.4</td>
+                                    <td>收购 Insignia Financial Group。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：极大扩大在纽约及英国等核心金融中心的绝对份额。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2006</td>
+                                    <td class="font-bold text-lg text-gray-700">40.3</td>
+                                    <td class="bg-blue-50">22亿美元收购 Trammell Crow Company (TCC)。<br/><span class="text-[#1d4ed8] font-bold mt-1 block">意义：里程碑。引入成熟企业外包能力，彻底改变单一经纪结构。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2008</td>
+                                    <td class="font-bold text-lg text-gray-700">51.3</td>
+                                    <td>金融危机防御期，暂停大规模并购。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：进行防御性裁员、成本控制，退出边缘重资产。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2010</td>
+                                    <td class="font-bold text-lg text-gray-700">51.2</td>
+                                    <td>重组资管业务线。<br/><span class="text-[#06b6d4] font-bold mt-1 block">意义：稳固现金流，为后危机时代下一轮扩张蓄力。</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Stage 3 -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 shrink-0 flex items-center justify-between">
+            <div>
+                <span class="bg-blue-100 text-[#1e3a8a] px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase">&#9632; 2011 - 2018</span>
+                <h2 class="text-4xl font-black text-[#0f172a] mt-3">阶段三：行业地位巩固</h2>
+            </div>
+            <div class="text-right max-w-lg">
+                <p class="text-base text-gray-600 font-medium">收购江森自控等外包巨头，全面转型“轻资产、高壁垒、经常性收入”模型，甩开同业竞争。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+            <div class="col-span-4 flex flex-col gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#0ea5e9]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#0ea5e9] text-xl">&#10061;</span> 时代背景</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">后危机时代机构投资者不动产配置大增；实体企业端对降低运营成本、提高设施管理效率的诉求空前高涨。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#0ea5e9]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#0ea5e9] text-xl">&#10061;</span> 公司战略</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">全面转型“<strong class="text-[#0f172a]">轻资产、经常性收入</strong>”模型。深耕资产管理与设施管理(FM)，打造全球一站式服务底座。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#0ea5e9]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#0ea5e9] text-xl">&#10061;</span> 收并购行为</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">跨界并购设施管理巨头。核心动作是以14.75亿美元收购<strong class="text-[#0f172a]">江森自控(Johnson Controls)</strong>的GWS业务。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#0ea5e9]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#0ea5e9] text-xl">&#10061;</span> 并购后整合</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">做大GWS分部。降低采购成本，将零散交易客户转化为签订3-5年长约的稳定客户，大幅平滑业绩波动。</p>
+                </div>
+            </div>
+
+            <!-- Vertical split right panel -->
+            <div class="col-span-8 flex flex-col gap-6 h-full">
+                <!-- Top Table -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden shrink-0 flex flex-col h-[55%]">
+                    <div class="bg-[#1e3a8a] px-6 py-4 shrink-0">
+                        <h4 class="font-bold text-lg text-white tracking-wide">核心财务表现与关键并购动作</h4>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <table class="w-full h-full text-base">
+                            <thead>
+                                <tr>
+                                    <th class="w-[15%]">年份</th>
+                                    <th class="w-[20%]">营收</th>
+                                    <th class="w-[65%]">关键收并购及战略影响</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800">
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2011</td>
+                                    <td class="font-bold text-lg">59.3 亿</td>
+                                    <td>收购 ING Real Estate Inv.<br/><span class="text-[#06b6d4] font-bold text-sm">跃升为全球最大房产资管公司。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2013</td>
+                                    <td class="font-bold text-lg">71.9 亿</td>
+                                    <td>收购 Norland <span class="text-[#06b6d4] font-bold text-sm">(获取欧洲硬核建筑技术)</span></td>
+                                </tr>
+                                <tr class="bg-blue-50">
+                                    <td class="font-black text-xl text-[#1e3a8a]">2015</td>
+                                    <td class="font-bold text-lg">108.6 亿</td>
+                                    <td class="font-bold text-[#1d4ed8]">收购江森自控 GWS 业务 <br/><span class="text-[#0ea5e9] font-semibold text-sm">彻底改变基因，在企业设施外包获碾压性优势。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2018</td>
+                                    <td class="font-bold text-lg">213.4 亿</td>
+                                    <td>收购 FacilitySource <span class="text-[#06b6d4] font-bold text-sm">(引入供应链与采购技术平台)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bottom Chart -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex-1 flex flex-col min-h-0">
+                    <h4 class="text-lg font-bold text-[#1e3a8a] text-center shrink-0 mb-4">核心业务结构质变：从“靠天吃饭”到“旱涝保收”</h4>
+                    <div class="chart-container-sm flex-1">
+                        <canvas id="segmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Stage 4 -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 shrink-0 flex items-center justify-between">
+            <div>
+                <span class="bg-blue-500 text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase">&#9632; 2019 - 2024</span>
+                <h2 class="text-4xl font-black text-[#0f172a] mt-3">阶段四：业务功能充足</h2>
+            </div>
+            <div class="text-right max-w-lg">
+                <p class="text-base text-gray-600 font-medium">跳出商办红海，大举投资大型基建项目管理与ESG咨询，开启纵深防御与跨类别资产拓张。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+            <div class="col-span-4 flex flex-col gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#14b8a6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#14b8a6] text-xl">&#10061;</span> 时代背景</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">疫情引发混合办公革命。ESG合规成为跨国企业硬约束，高息环境重创传统商办交易流动性。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#14b8a6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#14b8a6] text-xl">&#10061;</span> 公司战略</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">“<strong class="text-[#0f172a]">纵深防御与多元化</strong>”。从商业楼宇向基础设施、医疗及公共部门拓展，对冲宏观地产周期风险。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#14b8a6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#14b8a6] text-xl">&#10061;</span> 收并购行为</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">收购高附加值轻资产。参股顶级项目管理龙头 <strong class="text-[#0f172a]">Turner & Townsend</strong>，收购政府设施管理商 J&J。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 stage-card flex-1 flex flex-col justify-center border-l-4 border-l-[#14b8a6]">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-[#14b8a6] text-xl">&#10061;</span> 并购后整合</h3>
+                    <p class="text-gray-600 text-sm md:text-base leading-relaxed">将高端项目管理(T&T)与原有GWS绑定，提供“绿色设计-施工管理-低碳运维”全生命周期闭环。</p>
+                </div>
+            </div>
+
+            <div class="col-span-8 flex flex-col gap-6 h-full">
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden shrink-0 h-[55%] flex flex-col">
+                    <div class="bg-[#1e3a8a] px-6 py-4 shrink-0">
+                        <h4 class="font-bold text-lg text-white tracking-wide">核心财务表现与关键并购动作</h4>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <table class="w-full h-full text-base">
+                            <thead>
+                                <tr>
+                                    <th class="w-[15%]">年份</th>
+                                    <th class="w-[20%]">营收</th>
+                                    <th class="w-[65%]">关键收并购及战略影响</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-800">
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2019</td>
+                                    <td class="font-bold text-lg">238.9 亿</td>
+                                    <td>收购 Telford Homes <span class="text-[#06b6d4] font-bold text-sm">(进军英国BTR长租公寓，抗周期)</span></td>
+                                </tr>
+                                <tr class="bg-teal-50">
+                                    <td class="font-black text-xl text-[#1e3a8a]">2021</td>
+                                    <td class="font-bold text-lg">277.4 亿</td>
+                                    <td class="font-bold text-teal-800">控股 Turner & Townsend <br/><span class="text-teal-600 font-semibold text-sm">获取全球顶尖大型基础设施与绿色项目咨询管理能力。</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2023</td>
+                                    <td class="font-bold text-lg">319.4 亿</td>
+                                    <td>收购 J&J Worldwide <span class="text-[#06b6d4] font-bold text-sm">(强化联邦政府极高防御性客群)</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-black text-xl text-[#1e3a8a]">2024</td>
+                                    <td class="font-bold text-lg text-gray-400">330 亿 (E)</td>
+                                    <td>增持T&T至70%；出售非核心重资产 <span class="text-[#06b6d4] font-bold text-sm">(坚定轻资产化)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 flex-1 flex flex-col min-h-0">
+                    <h4 class="text-lg font-bold text-[#1e3a8a] text-center shrink-0 mb-4">并购标的分布：资本向“强ESG”与“硬核基建”两极集中</h4>
+                    <div class="chart-container-sm flex-1">
+                        <canvas id="mnaBubbleChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Stage 5 -->
+    <div class="slide p-8 md:p-12 h-full">
+        <div class="mb-6 shrink-0 flex items-center justify-between">
+            <div>
+                <span class="bg-[#0f172a] text-cyan-400 px-4 py-1.5 rounded-full text-sm font-bold tracking-widest uppercase border border-cyan-800">&#9632; 2025 - 2026</span>
+                <h2 class="text-4xl font-black text-[#0f172a] mt-3">阶段五：新兴领域布局</h2>
+            </div>
+            <div class="text-right max-w-lg">
+                <p class="text-base text-gray-600 font-medium">重构清晰四大业务架构，锚定空间数据分析与AI数据中心运维，向“科技赋能平台”跨越。</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+            <div class="col-span-5 flex flex-col gap-4">
+                <div class="bg-[#f8fafc] p-6 rounded-xl shadow-sm border border-cyan-200 stage-card flex-1 flex flex-col justify-center relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-16 h-16 bg-cyan-100 rounded-full opacity-50"></div>
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2 z-10"><span class="text-cyan-600 text-xl">&#10061;</span> 时代背景</h3>
+                    <p class="text-gray-700 text-base leading-relaxed z-10">AIGC与大模型重构资管场景。零碳法案密集落地，智算中心(IDC)与微电网成为下一代核心不动产。</p>
+                </div>
+                <div class="bg-[#f8fafc] p-6 rounded-xl shadow-sm border border-cyan-200 stage-card flex-1 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-cyan-600 text-xl">&#10061;</span> 公司战略</h3>
+                    <p class="text-gray-700 text-base leading-relaxed">向“<strong class="text-[#0f172a]">空间数据与AI赋能平台</strong>”蜕变。用海量管理面积做数据训练场，重兵布局智算中心特种运维。</p>
+                </div>
+                <div class="bg-[#f8fafc] p-6 rounded-xl shadow-sm border border-cyan-200 stage-card flex-1 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-cyan-600 text-xl">&#10061;</span> 收并购方向预测</h3>
+                    <p class="text-gray-700 text-base leading-relaxed">转战科技圈。重点投资并购空间动态分析算法公司、微电网及储能管理系统、数据中心液冷工程商。</p>
+                </div>
+                <div class="bg-[#f8fafc] p-6 rounded-xl shadow-sm border border-cyan-200 stage-card flex-1 flex flex-col justify-center">
+                    <h3 class="text-lg font-bold text-[#0f172a] mb-2 flex items-center gap-2"><span class="text-cyan-600 text-xl">&#10061;</span> 整合提效：API赋能</h3>
+                    <p class="text-gray-700 text-base leading-relaxed">通过底层数据打通构建赋能平台。内部向全球经纪人部署AI工具提效，外部向客户输出SaaS订阅产品。</p>
+                </div>
+            </div>
+
+            <div class="col-span-7 flex flex-col h-full">
+                <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl border border-cyan-300 overflow-hidden flex-1 flex flex-col">
+                    <div class="bg-[#1e3a8a] px-8 py-5 shrink-0 text-center">
+                        <h4 class="font-bold text-xl text-white tracking-widest">重构后的核心业务架构与并购聚焦</h4>
+                    </div>
+                    <div class="p-8 flex-1 flex flex-col justify-between">
+                        
+                        <div class="grid grid-cols-2 gap-6 mb-6">
+                            <div class="bg-white border-l-4 border-cyan-500 p-5 shadow-md rounded-lg hover:shadow-lg transition-shadow">
+                                <div class="font-black text-cyan-800 text-lg mb-1">咨询服务 (Advisory)</div>
+                                <div class="text-sm text-gray-600">AI驱动的智能租金定价、资产评估、高端战略顾问与交易经纪。</div>
+                            </div>
+                            <div class="bg-white border-l-4 border-blue-600 p-5 shadow-md rounded-lg hover:shadow-lg transition-shadow">
+                                <div class="font-black text-blue-800 text-lg mb-1">BOE建筑运营</div>
+                                <div class="text-sm text-gray-600">高级设施运维外包、微电网与智能楼宇能耗自动化管理系统。</div>
+                            </div>
+                            <div class="bg-white border-l-4 border-indigo-500 p-5 shadow-md rounded-lg hover:shadow-lg transition-shadow">
+                                <div class="font-black text-indigo-800 text-lg mb-1">项目管理 (Project Mgt)</div>
+                                <div class="text-sm text-gray-600">大型绿色基础设施施工管理、AI数据中心液冷与电力特种工程。</div>
+                            </div>
+                            <div class="bg-white border-l-4 border-teal-500 p-5 shadow-md rounded-lg hover:shadow-lg transition-shadow">
+                                <div class="font-black text-teal-800 text-lg mb-1">投资管理 (Inv. Mgt)</div>
+                                <div class="text-sm text-gray-600">全球REITs运作、核心资产(数字基建/长租)并购与产业基金投管。</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-[#0f172a] p-6 rounded-xl border border-blue-900 mt-auto relative overflow-hidden text-white">
+                            <div class="absolute right-0 bottom-0 opacity-10 font-black text-8xl -mr-4 -mb-8">AI</div>
+                            <h5 class="font-bold text-cyan-400 mb-4 text-lg border-b border-gray-700 pb-2">关键收并购标的特征预测 (2025-2026)：</h5>
+                            <ul class="list-disc pl-6 text-base text-gray-200 space-y-3">
+                                <li><strong class="text-white">空间动态分析大模型初创企业：</strong>抢占行业数据与AI定价权，用算法彻底重塑传统资产评估体系。</li>
+                                <li><strong class="text-white">IDC液冷技术与特种电力运维工程商：</strong>精准卡位下一代极高算力设施，获取具有极高技术门槛和壁垒的经常性收入。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Insights -->
+    <div class="slide p-12 flex flex-col items-center justify-center h-full bg-slate-50">
+        <div class="text-center mb-16 shrink-0">
+            <h2 class="text-5xl font-black text-[#1e3a8a] mb-6 inline-block border-b-8 border-cyan-400 pb-3">战略特征与行业借鉴启示</h2>
+            <p class="text-gray-600 mt-4 max-w-3xl mx-auto text-lg leading-relaxed">纵观CBRE三十余年发展史，其资本运作展现出极强的纪律性与前瞻性，这些底层逻辑对国内现代服务业及咨询机构具有极其深刻的借鉴意义。</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full max-w-[1400px]">
+            <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-[#1e3a8a] hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-[#1e3a8a] text-6xl mb-4 font-black opacity-10 relative -top-4 -left-2">&#10112;</div>
+                <h4 class="text-2xl font-black text-gray-900 mb-4 -mt-16">逆周期抄底法则</h4>
+                <p class="text-base text-gray-600 leading-relaxed">精准利用宏观经济的波谷（如90年代初、08年次贷后）低成本吸纳优质资产或竞争对手。坚决剥离低效重资产，买入高潜轻资产。</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-[#3b82f6] hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-[#3b82f6] text-6xl mb-4 font-black opacity-10 relative -top-4 -left-2">&#10113;</div>
+                <h4 class="text-2xl font-black text-gray-900 mb-4 -mt-16">死磕“经常性收入”</h4>
+                <p class="text-base text-gray-600 leading-relaxed">决不满足于依靠单笔高额佣金的“看天吃饭”模式。转型依靠物业与设施外包合同带来长期年费收入，以此作为资本扩张终极底座。</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-[#06b6d4] hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-[#06b6d4] text-6xl mb-4 font-black opacity-10 relative -top-4 -left-2">&#10114;</div>
+                <h4 class="text-2xl font-black text-gray-900 mb-4 -mt-16">组织强随动性</h4>
+                <p class="text-base text-gray-600 leading-relaxed">铁律：<strong class="text-gray-900">“并购必重构”</strong>。通过强力矩阵管理彻底打破收购带来的山头主义，确保前线能够向跨国客户输出毫无缝隙的“一站式方案”。</p>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-xl border-t-8 border-[#14b8a6] hover:-translate-y-2 transition-transform duration-300">
+                <div class="text-[#14b8a6] text-6xl mb-4 font-black opacity-10 relative -top-4 -left-2">&#10115;</div>
+                <h4 class="text-2xl font-black text-gray-900 mb-4 -mt-16">锚定终端痛点</h4>
+                <p class="text-base text-gray-600 leading-relaxed">并购版图并非高管的盲目跨界，而是严格追踪全球巨头企业的需求转移（降本增效->ESG绿色合规->数字基建）。客户去哪，资本就买哪。</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- Bottom PPT Controls -->
+<div class="shrink-0 h-16 bg-[#0f172a] border-t border-gray-800 flex items-center justify-between px-8 z-50 text-white shadow-inner">
+    <div class="text-sm text-gray-400 font-medium flex items-center gap-2">
+        <span class="inline-block border border-gray-600 rounded px-2 py-0.5">&larr;</span> 
+        <span class="inline-block border border-gray-600 rounded px-2 py-0.5">&rarr;</span> 
+        或 底部按钮翻页
+    </div>
+    <div class="flex items-center gap-6">
+        <button onclick="prevSlide()" class="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors text-base font-bold shadow">&larr; 上一页</button>
+        <span id="slideCounter" class="text-lg font-black text-cyan-400 min-w-[4rem] text-center tracking-widest">1 / 8</span>
+        <button onclick="nextSlide()" class="px-6 py-2 bg-[#2563eb] hover:bg-blue-600 text-white rounded-lg transition-colors text-base font-bold shadow">下一页 &rarr;</button>
+    </div>
+</div>
+
+<script>
+// Slide Transition Logic
+let currentSlideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const navLinks = document.querySelectorAll('.nav-link');
+const counter = document.getElementById('slideCounter');
+
+function updatePresentation() {
+    slides.forEach((slide, index) => {
+        if (index === currentSlideIndex) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+
+    navLinks.forEach((link, index) => {
+        if (index === currentSlideIndex) {
+            link.classList.add('active');
+            link.classList.replace('text-gray-400', 'text-white');
+        } else {
+            link.classList.remove('active');
+            link.classList.replace('text-white', 'text-gray-400');
+        }
+    });
+
+    counter.textContent = `${currentSlideIndex + 1} / ${slides.length}`;
+    
+    // Trigger window resize to ensure Chart.js uses the new container dimensions exactly
+    setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+}
+
+function nextSlide() {
+    if (currentSlideIndex < slides.length - 1) {
+        currentSlideIndex++;
+        updatePresentation();
+    }
+}
+
+function prevSlide() {
+    if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        updatePresentation();
+    }
+}
+
+function goToSlide(index) {
+    if (index >= 0 && index < slides.length) {
+        currentSlideIndex = index;
+        updatePresentation();
+    }
+}
+
+// Keyboard Navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+    }
+});
+
+// Chart.js Global Config for PPT scale
+Chart.defaults.font.family = 'Noto Sans SC';
+Chart.defaults.font.size = 13;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+Chart.defaults.plugins.tooltip.titleFont = { size: 15, family: 'Noto Sans SC', weight: 'bold' };
+Chart.defaults.plugins.tooltip.bodyFont = { size: 14, family: 'Noto Sans SC' };
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.cornerRadius = 6;
+Chart.defaults.plugins.tooltip.displayColors = false;
+
+// Data Definitions
+const years = ['1990', '1993', '1995', '1997', '1998', '2000', '2003', '2006', '2008', '2010', '2011', '2013', '2015', '2018', '2019', '2021', '2023', '2024', '2025', '2026'];
+const revenueData = [4.0, 5.5, 6.8, 8.0, 12.0, 14.5, 16.4, 40.3, 51.3, 51.2, 59.3, 71.9, 108.6, 213.4, 238.9, 277.4, 319.4, 330.0, 345.0, 362.0];
+const marketCapData = [null, null, null, null, null, null, 15.0, 40.0, 15.0, 60.0, 50.0, 80.0, 110.0, 130.0, 200.0, 350.0, 280.0, 350.0, 400.0, 450.0]; 
+const mnaEvents = [
+    "管理层收购 (MBO)", "收购 Westmac 等", "设立 L.J. Melody", "收购 Koll Real Estate (物管)",
+    "合并 Richard Ellis (REI)", "区域整合期", "收购 Insignia (纽约/英国)", "22亿美元收购 TCC (外包质变)",
+    "裁员与重资产退出", "资管业务重组", "收购 ING 资管 (世界最大)", "收购 Norland (硬核技术)",
+    "收购 江森自控 GWS (轻资产化)", "收购 FacilitySource", "收购 Telford (长租公寓)", "控股 Turner & Townsend (基建咨询)",
+    "收购 J&J Worldwide (政府特供)", "增持 T&T，加速轻资产化", "预估: 并购AI空间评估模型企业", "预估: 并购IDC液冷运维工程商"
+];
+
+const pointColors = revenueData.map((val, idx) => {
+    if(idx <= 3) return '#1d4ed8'; 
+    if(idx >= 4 && idx <= 9) return '#8b5cf6'; 
+    if(idx >= 10 && idx <= 13) return '#0ea5e9'; 
+    if(idx >= 14 && idx <= 17) return '#14b8a6'; 
+    if(idx >= 18) return '#0f172a'; 
+    return '#1e3a8a';
+});
+
+// 1. Macro Chart (Slide 1)
+const ctxMacro = document.getElementById('macroChart').getContext('2d');
+const gradientFillRev = ctxMacro.createLinearGradient(0, 0, 0, 400);
+gradientFillRev.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+gradientFillRev.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+
+new Chart(ctxMacro, {
+    type: 'line',
+    data: {
+        labels: years,
+        datasets: [
+            {
+                label: '年末总市值 (亿美元) - 右侧坐标',
+                data: marketCapData,
+                type: 'bar',
+                backgroundColor: 'rgba(30, 58, 138, 0.12)',
+                borderColor: 'rgba(30, 58, 138, 0.3)',
+                borderWidth: 1,
+                borderRadius: 4,
+                yAxisID: 'y1'
+            },
+            {
+                label: '营业收入 (亿美元) - 左侧坐标',
+                data: revenueData,
+                type: 'line',
+                borderColor: '#06b6d4',
+                backgroundColor: gradientFillRev,
+                borderWidth: 4,
+                pointBackgroundColor: pointColors,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 10,
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: { position: 'top', labels: { boxWidth: 16, font: { size: 14, weight: 'bold' } } },
+            tooltip: {
+                callbacks: {
+                    title: function(items) { return items[0].label + ' 年度核心动作'; },
+                    afterTitle: function() { return ' '; },
+                    label: function(context) {
+                        if (context.datasetIndex === 0) {
+                            return '【市值】: ' + (context.parsed.y ? context.parsed.y + ' 亿美元' : '无数据');
+                        } else {
+                            let labelArray = [];
+                            labelArray.push('【营收】: ' + context.parsed.y + ' 亿美元');
+                            labelArray.push('【动作】: ' + mnaEvents[context.dataIndex]);
+                            return labelArray;
+                        }
+                    }
+                }
+            }
+        },
+        scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 13, weight: 'bold' } } },
+            y: {
+                type: 'linear', display: true, position: 'left',
+                title: { display: true, text: '营收规模 (亿美元)', font: { size: 14, weight: 'bold' } },
+                grid: { color: '#e2e8f0', borderDash: [5, 5] },
+            },
+            y1: {
+                type: 'linear', display: true, position: 'right',
+                title: { display: true, text: '估算市值 (亿美元)', font: { size: 14, weight: 'bold' } },
+                grid: { drawOnChartArea: false },
+            }
+        }
+    }
+});
+
+// 2. Segment Chart (Stage 3)
+const segCtx = document.getElementById('segmentChart').getContext('2d');
+new Chart(segCtx, {
+    type: 'bar',
+    data: {
+        labels: ['2010年 (依赖单次交易)', '2018年 (依赖长期管理合同)'],
+        datasets: [
+            { label: '波动性佣金 (交易/租赁)', data: [65, 35], backgroundColor: '#94a3b8' },
+            { label: '经常性外包 (GWS等)', data: [25, 55], backgroundColor: '#0ea5e9' },
+            { label: '高利润资管 (REI)', data: [10, 10], backgroundColor: '#1e3a8a' }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { position: 'right', labels: { font: { size: 13 } } },
+            tooltip: { callbacks: { title: function() { return ''; }, label: function(ctx) { return ctx.dataset.label + ': ' + ctx.parsed.y + '%'; } } }
+        },
+        scales: {
+            x: { stacked: true, grid: { display: false }, ticks: { font: {size: 14, weight: 'bold'} } },
+            y: { stacked: true, max: 100, ticks: { font: {size: 13}, callback: function(val) { return val + '%'; } } }
+        }
+    }
+});
+
+// 3. Bubble Chart (Stage 4)
+const bubbleCtx = document.getElementById('mnaBubbleChart').getContext('2d');
+new Chart(bubbleCtx, {
+    type: 'bubble',
+    data: {
+        datasets: [{
+            label: '阶段四核心并购标的特征',
+            data: [
+                { x: 20, y: 70, r: 12, target: 'Telford Homes (长租公寓)' },
+                { x: 50, y: 90, r: 25, target: 'Turner & Townsend (基建咨询)' },
+                { x: 80, y: 85, r: 18, target: 'J&J Worldwide (医疗/政府设施)' },
+                { x: 90, y: 60, r: 8, target: 'PropTech 初创公司群' }
+            ],
+            backgroundColor: 'rgba(20, 184, 166, 0.7)',
+            borderColor: '#0f766e',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    title: function(ctx) { return ctx[0].raw.target; },
+                    label: function(ctx) {
+                        return [
+                            '偏离传统商办度: ' + ctx.raw.x,
+                            '抗周期防御属性: ' + ctx.raw.y
+                        ];
+                    }
+                }
+            }
+        },
+        scales: {
+            x: {
+                title: { display: true, text: '偏离传统商办市场的程度 (低 → 高)', font: { size: 13, weight: 'bold' } },
+                min: 0, max: 100, grid: { color: '#f1f5f9' }, ticks: { display: false }
+            },
+            y: {
+                title: { display: true, text: '抗周期防御重要性 (低 → 高)', font: { size: 13, weight: 'bold' } },
+                min: 50, max: 100, grid: { color: '#f1f5f9' }, ticks: { display: false }
+            }
+        }
+    }
+});
+
+// Initialize
+updatePresentation();
+</script>
+</body>
+</html>
